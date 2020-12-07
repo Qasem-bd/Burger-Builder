@@ -1,0 +1,15 @@
+.red {
+  width: 60%;
+  text-align: left;
+  text-transform: capitalize;
+  text-shadow: 2px 2px 5px red;
+  letter-spacing: 0px;
+  background-color: powderblue;
+  margin: 20px auto;
+  padding: 10px;
+  border: 2px solid tomato;
+  border-radius: 10px;
+  background-image: url("./logo.svg");
+  background-repeat: no-repeat;
+  background-position: right;
+}

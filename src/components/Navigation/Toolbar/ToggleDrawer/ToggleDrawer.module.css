@@ -1,0 +1,21 @@
+.ToggleDrawer {
+  width: 40px;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-evenly;
+  align-items: center;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.ToggleDrawer div {
+  width: 90%;
+  height: 3px;
+  background-color: white;
+}
+
+@media (min-width: 500px) {
+  .ToggleDrawer {
+    display: none;
+  }
+}
