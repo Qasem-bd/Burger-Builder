@@ -18,16 +18,19 @@ const INGREDIENTS_PRICES = {
 class BurgerBuilder extends Component {
 
     state = {
-        ingredients : {
-            salad :0,
-            cheese: 0,
-            meat :0
-           },
+        ingredients : null,
            totalPrice: 4,
            hasOrder: false,
            purchased : false,
-           orderConfirmed: false
+           orderConfirmed: false,
+           error :false
     }
+    componentDidMount () {
+      axios.get('/ingredients.json').then(res => {
+          this.setState({ingredients: res.data})
+      }).catch(error => this.setState({error:true}))
+    }
+
     updateHasOrderStatus = (actualIngtrdients) => {
         let ingredients = { ...actualIngtrdients}
         let sum = 0;
@@ -134,36 +137,48 @@ class BurgerBuilder extends Component {
         disabledInfo[key]= disabledInfo[key] <= 0;
     }
 
-       let orderSummery =  <OrderSummery ingredients = {this.state.ingredients}
-       cancelled = {this.purchaseCancelHandler}
-       purchased = {this.purchaseContinueHandler}
-       price = {this.state.totalPrice}
-       />
+       
 
-       if (this.state.orderConfirmed ){
-           orderSummery= <Spinner/>
-       }
+      
+    let loadedBurger = (this.state.error)? <p>Some Thing is Error</p> :<Spinner/> 
+    let  orderSummery = null;
+    if (this.state.ingredients) {
+         loadedBurger =  
+        <Aux>
+             <Burger 
+             ingriedents = {this.state.ingredients}
+             />
+             <BuildControls ingredients = {this.state.ingredients}
+                         addIngredient = {this.addIngredientHandler}
+                         removeIngredient= {this.removeIngredientHandler}
+                         disabledInfo = {disabledInfo}
+                         price = {this.state.totalPrice}
+                         hasOrder = {this.state.hasOrder}
+                         ordered = {this.purchasedHandler} 
+             />
+        </Aux>  
+         orderSummery =  <OrderSummery ingredients = {this.state.ingredients}
+        cancelled = {this.purchaseCancelHandler}
+        purchased = {this.purchaseContinueHandler}
+        price = {this.state.totalPrice}
+        />
+    }
+    if (this.state.orderConfirmed ){
+        orderSummery= <Spinner/>
+    }
+     
+
 
         return (
             <Aux>
-            <div>Burger Graphic </div>
-            <Burger 
-             ingriedents = {this.state.ingredients}
-            />
-            <Modal show = {this.state.purchased }
-                   showCancel = {this.purchaseCancelHandler}>
-                      
-                       {orderSummery}
-            </Modal>
-            <BuildControls ingredients = {this.state.ingredients}
-                           addIngredient = {this.addIngredientHandler}
-                           removeIngredient= {this.removeIngredientHandler}
-                           disabledInfo = {disabledInfo}
-                           price = {this.state.totalPrice}
-                           hasOrder = {this.state.hasOrder}
-                           ordered = {this.purchasedHandler} 
-            />
-
+                <div>Burger Graphic </div>
+                <Modal show = {this.state.purchased }
+                    showCancel = {this.purchaseCancelHandler}>
+                        
+                        {orderSummery}
+                </Modal>
+        
+                {loadedBurger}
             </Aux>
             
         );

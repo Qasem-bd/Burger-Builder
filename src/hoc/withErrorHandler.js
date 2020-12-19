@@ -9,7 +9,10 @@ return class extends Component  {
         error : null
     }
 
-    componentDidMount () {
+    errorConfirmedHandler= () => {
+        this.setState({error:null})
+    }
+    render () {
 
         axios.interceptors.request.use(req => {
             this.setState({error:null})
@@ -17,13 +20,8 @@ return class extends Component  {
         })
         axios.interceptors.response.use(res =>res, error => {
             this.setState({error : error})
+            console.log('Hiiiiiiiii',error.message)
         });
-
-    }
-    errorConfirmedHandler= () => {
-        this.setState({error:null})
-    }
-    render () {
     
         return (
             <Aux>
