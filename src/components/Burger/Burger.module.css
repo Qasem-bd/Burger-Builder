@@ -7,3 +7,15 @@
   width: 60%;
   margin: 10% auto;
 }
+
+@media screen and (min-width: 500px) {
+  .Burger {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .Burger {
+    width: 45%;
+  }
+}
