@@ -20,7 +20,6 @@ return class extends Component  {
         })
         axios.interceptors.response.use(res =>res, error => {
             this.setState({error : error})
-            console.log('Hiiiiiiiii',error.message)
         });
     
         return (
