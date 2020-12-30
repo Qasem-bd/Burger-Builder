@@ -103,6 +103,8 @@ class BurgerBuilder extends Component {
         this.setState({ 
             orderConfirmed: true
          })
+         console.log(this.props)
+         this.props.history.push('/checkout');
 
         const toSendOrder = {
             ingredients : this.state.ingredients,
