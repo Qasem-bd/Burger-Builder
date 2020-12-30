@@ -99,38 +99,38 @@ class BurgerBuilder extends Component {
      }    
 
      purchaseContinueHandler = () => {
-          
-        this.setState({ 
-            orderConfirmed: true
-         })
-         console.log(this.props)
-         this.props.history.push('/checkout');
+        this.props.history.push('/checkout');
+        // this.setState({ 
+        //     orderConfirmed: true
+        //  })
+        //  console.log(this.props)
+        
 
-        const toSendOrder = {
-            ingredients : this.state.ingredients,
-            price : this.state.totalPrice,
-            customer : {
-                name : 'Qasem Bdier',
-                address : {
-                    street: 'Henkelterosol 13',
-                    zipCode: '69123',
-                    country : 'Germany'
-                },
-                email: 'test@gmail.com'
-            },
-            deliveryMethod : 'fastest'
-        }
-        axios.post('/orders.json',toSendOrder).
-        then (response => { 
-            console.log(response);
-            this.setState({orderConfirmed : false,
-                            purchased: false })
-         })
-        .catch(error => { 
-            this.setState({orderConfirmed : false,
-                            purchased: false     })
-            console.log(error)
-         })
+        // const toSendOrder = {
+        //     ingredients : this.state.ingredients,
+        //     price : this.state.totalPrice,
+        //     customer : {
+        //         name : 'Qasem Bdier',
+        //         address : {
+        //             street: 'Henkelterosol 13',
+        //             zipCode: '69123',
+        //             country : 'Germany'
+        //         },
+        //         email: 'test@gmail.com'
+        //     },
+        //     deliveryMethod : 'fastest'
+        // }
+        // axios.post('/orders.json',toSendOrder).
+        // then (response => { 
+        //     console.log(response);
+        //     this.setState({orderConfirmed : false,
+        //                     purchased: false })
+        //  })
+        // .catch(error => { 
+        //     this.setState({orderConfirmed : false,
+        //                     purchased: false     })
+        //     console.log(error)
+        //  })
       }
     render() {
     const disabledInfo = {...this.state.ingredients}
