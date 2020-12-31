@@ -4,9 +4,11 @@ import NavigationItem from './NavigationItem/NavigationItem'
 const NavigationItems = () => (
     
     <ul className = {classes.NavigationItems}>
-        <NavigationItem Link ='/' active  >Burger Builder</NavigationItem>
+            {/* we have used "genau to mention to that, the Route "/" will be active just by Route and not by subRoute */}
+        <NavigationItem Link ='/' genau >Burger Builder</NavigationItem> 
         <NavigationItem Link = '/checkout'>Checkout</NavigationItem>
-        <NavigationItem Link = '/'>About</NavigationItem>   
+        <NavigationItem Link = '/orders'>Orders</NavigationItem>
+        <NavigationItem Link = '/about'  >About</NavigationItem>   
     </ul>
 );
 
