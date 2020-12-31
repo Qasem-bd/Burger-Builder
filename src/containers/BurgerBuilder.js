@@ -101,8 +101,11 @@ class BurgerBuilder extends Component {
      purchaseContinueHandler = () => {
          const queryIng = []
          for (let i in this.state.ingredients) {
+
              queryIng.push(encodeURIComponent(i) + '=' + encodeURIComponent( this.state.ingredients[i])) 
          }
+         let passedTotalPrice = encodeURIComponent('totalPrice') + '='  + encodeURIComponent(this.state.totalPrice)
+         queryIng.push(passedTotalPrice)
          const queryString = queryIng.join('&') 
 
         this.props.history.push({
@@ -111,37 +114,6 @@ class BurgerBuilder extends Component {
             
         });
 
-        // this.setState({ 
-        //     orderConfirmed: true
-        //  })
-        //  console.log(this.props)
-        
-
-        // const toSendOrder = {
-        //     ingredients : this.state.ingredients,
-        //     price : this.state.totalPrice,
-        //     customer : {
-        //         name : 'Qasem Bdier',
-        //         address : {
-        //             street: 'Henkelterosol 13',
-        //             zipCode: '69123',
-        //             country : 'Germany'
-        //         },
-        //         email: 'test@gmail.com'
-        //     },
-        //     deliveryMethod : 'fastest'
-        // }
-        // axios.post('/orders.json',toSendOrder).
-        // then (response => { 
-        //     console.log(response);
-        //     this.setState({orderConfirmed : false,
-        //                     purchased: false })
-        //  })
-        // .catch(error => { 
-        //     this.setState({orderConfirmed : false,
-        //                     purchased: false     })
-        //     console.log(error)
-        //  })
       }
     render() {
     const disabledInfo = {...this.state.ingredients}
