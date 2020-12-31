@@ -1,7 +1,7 @@
 import './Checkout.module.css'
 import React, { Component } from 'react'
 import {Route} from 'react-router-dom'
-import CheckoutSummery from '../../components/CkeckoutSummery/CheckoutSummery'
+import CheckoutSummery from '../../components/Order/CkeckoutSummery/CheckoutSummery'
 import ContactData from '../../containers/Checkout/ContactData/ContactData'
 
 class Checkout extends Component {
