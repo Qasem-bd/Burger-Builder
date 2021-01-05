@@ -15,7 +15,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder : 'Your Name'
                 },
-                value : 'Qasem Bdier'
+                value : ''
             },
             email:{
                 elementType : 'input',
@@ -99,6 +99,18 @@ class ContactData extends Component {
             })
     }
 
+    inputChangeHandler = (event,identifier) => {
+        console.log (event.target.value)
+        const updatedOrderForm = {...this.state.orderForm}
+        const updatedFormElement = {
+                     ...updatedOrderForm[identifier]
+                  }
+        updatedFormElement.value = event.target.value;
+        updatedOrderForm[identifier] = updatedFormElement;
+        this.setState({orderForm : updatedOrderForm})
+
+    }
+
     render () {
         let formElementsArray = []
         for (let key in this.state.orderForm) {
@@ -106,12 +118,6 @@ class ContactData extends Component {
                 config : this.state.orderForm[key],
                 id : key
             });
-        let inputElements = formElementsArray.map(formElement => {
-            return  <Input key = {formElement.id}
-                           elementType = {formElement.config.elementType}
-                           elementConfig = {formElement.config.elementConfig}
-                           value = {formElement.config.value}/>
-        })
         }
         let form = (
             <form>
@@ -120,13 +126,10 @@ class ContactData extends Component {
                          return  <Input key = {formElement.id}
                                         elementType = {formElement.config.elementType}
                                         elementConfig = {formElement.config.elementConfig}
-                                        value = {formElement.config.value}/>
+                                        value = {formElement.config.value}
+                                        changed = {(event) => this.inputChangeHandler(event,formElement.id)}/>
                         }) 
                 }
-                {/* <Input elementType = '...' elementConfig = '...' value = '...'/>
-                <Input inputtype = 'input'  type = 'email' name = 'email' placeholder = 'Your Email'/>
-                <Input  inputtype = 'input' type = 'text' name = 'street' placeholder = 'Street'/>
-                <Input inputtype = 'input'  type = 'text' name = 'postal' placeholder = 'Postal Code'/> */}
                 <Button 
                     btnType = 'Success'
                     clicked = {this.orderHandler} >ORDER</Button>
