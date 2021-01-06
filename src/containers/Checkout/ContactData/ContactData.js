@@ -15,7 +15,11 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder : 'Your Name'
                 },
-                value : ''
+                value : '',
+                validation : {
+                    required : true
+                },
+                valid : false
             },
             email:{
                 elementType : 'input',
@@ -23,7 +27,11 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder : 'Your E-Mail'
                 },
-                value : ''
+                value : '',
+                validation : {
+                    required : true
+                },
+                valid : false
             },
             street : {
                 elementType : 'input',
@@ -31,7 +39,11 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder : 'Street'
                 },
-                value : ''
+                value : '',
+                validation : {
+                    required : true
+                },
+                valid : false
             } ,
             postalCode: {
                 elementType : 'input',
@@ -39,7 +51,13 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder : 'PostalCode'
                 },
-                value : ''
+                value : '',
+                validation : {
+                    required : true,
+                    maxLength: 5,
+                    minLength: 5
+                },
+                valid : false
             } ,
             country: {
                 elementType : 'input',
@@ -47,7 +65,11 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder : 'Country'
                 },
-                value : ''
+                value : '',
+                validation : {
+                    required : true
+                },
+                valid : false
             }  ,
             deliveryMethod: {
                 elementType : 'select',
@@ -57,7 +79,11 @@ class ContactData extends Component {
                         {value : 'cheapest', displayValue: 'Cheapest'}
                     ]
                 },
-                value : ''
+                value : '',
+                validation : {
+                    required : true
+                },
+                valid : false
             } 
         },
       
@@ -67,9 +93,9 @@ class ContactData extends Component {
 
     orderHandler = (event) => {
         event.preventDefault();
-        console.log(this.props)
-        console.log(this.props.ingredients)
-        console.log(this.props.totalPrice)
+        // console.log(this.props)
+        // console.log(this.props.ingredients)
+        // console.log(this.props.totalPrice)
                
                 this.setState({ loading: true })
         const formData = {}
@@ -84,6 +110,7 @@ class ContactData extends Component {
         }
         axios.post('/orders.json',toSendOrder).
             then (response => { 
+                    // logging the Response
                     console.log(response);
                     this.setState({loading : false})
                     this.props.history.push('/')
@@ -93,14 +120,39 @@ class ContactData extends Component {
                     console.log(error)
             })
     }
+    
+    checkFormElement = (value,rules) => {
+        let isValid = false
+        console.log(rules)
+        
+        if (rules.required) {
+            isValid = value.trim() !== '';
+        }
+        if (rules.maxLength){
+            isValid = (value.trim().length <= rules.maxLength) && isValid
+            console.log(value.trim().length)
+        }
+        if (rules.minLength) {
+            isValid = (value.trim().length >= rules.minLength) && isValid
+        }
+             
+            return isValid;
+    }
 
     inputChangeHandler = (event,identifier) => {
-        console.log (event.target.value)
+        
         const updatedOrderForm = {...this.state.orderForm}
+
         const updatedFormElement = {
                      ...updatedOrderForm[identifier]
                   }
+
         updatedFormElement.value = event.target.value;
+        //check if the value of formElement is valid or not, and store the result in the valid property
+        updatedFormElement.valid =  this.checkFormElement(updatedFormElement.value,updatedFormElement.validation)
+            //logging The updatedFormElement
+            console.log(updatedFormElement)
+
         updatedOrderForm[identifier] = updatedFormElement;
         this.setState({orderForm : updatedOrderForm})
 
