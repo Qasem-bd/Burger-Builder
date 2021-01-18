@@ -12,11 +12,7 @@ import {connect} from 'react-redux'
 import * as actionTypes from '../store/actions'
 
 
-const INGREDIENTS_PRICES = {
-    salad:0.7,
-    cheese:0.8,
-    meat:1.3
-}
+
 class BurgerBuilder extends Component {
 
     state = {
@@ -54,35 +50,35 @@ class BurgerBuilder extends Component {
     }
 
     addIngredientHandler = (ingredientType) => {
-        const oldCount = this.state.ingredients[ingredientType];
-        const newCount = oldCount + 1;
-        let actualIngtrdients = {...this.state.ingredients};
-        actualIngtrdients[ingredientType]=newCount;
-        const oldPrice = this.state.totalPrice;
-        const newPrice = oldPrice + INGREDIENTS_PRICES[ingredientType];
+        // const oldCount = this.state.ingredients[ingredientType];
+        // const newCount = oldCount + 1;
+        // let actualIngtrdients = {...this.state.ingredients};
+        // actualIngtrdients[ingredientType]=newCount;
+        // const oldPrice = this.state.totalPrice;
+        //  const newPrice = oldPrice + INGREDIENTS_PRICES[ingredientType];
         
-        this.setState({
-            ingredients: actualIngtrdients,
-            totalPrice: newPrice
-        })
-        this.updateHasOrderStatus(actualIngtrdients);
+        // this.setState({
+        //     ingredients: actualIngtrdients,
+        //     totalPrice: newPrice
+        // })
+        // this.updateHasOrderStatus(actualIngtrdients);
     }
 
     removeIngredientHandler = (ingredientType) =>{
-        const oldCount = this.state.ingredients[ingredientType];
-        if (oldCount <= 0)
-          return
-        const newCount = oldCount - 1;
-        let actualIngtrdients = {...this.state.ingredients};
-        actualIngtrdients[ingredientType]=newCount;
-        const oldPrice = this.state.totalPrice;
-        const newPrice = oldPrice - INGREDIENTS_PRICES[ingredientType];
-        this.setState({
-            ingredients: actualIngtrdients,
-            totalPrice: newPrice
-        })
+        // const oldCount = this.state.ingredients[ingredientType];
+        // if (oldCount <= 0)
+        //   return
+        // const newCount = oldCount - 1;
+        // let actualIngtrdients = {...this.state.ingredients};
+        // actualIngtrdients[ingredientType]=newCount;
+        // const oldPrice = this.state.totalPrice;
+        //  const newPrice = oldPrice - INGREDIENTS_PRICES[ingredientType];
+        // this.setState({
+        //     ingredients: actualIngtrdients,
+        //     totalPrice: newPrice
+        // })
 
-        this.updateHasOrderStatus(actualIngtrdients);
+        // this.updateHasOrderStatus(actualIngtrdients);
 
      }  
 
@@ -139,7 +135,7 @@ class BurgerBuilder extends Component {
                          addIngredient = {this.props.onIngredientAdded}
                          removeIngredient= {this.props.onIngredientRemoved}
                          disabledInfo = {disabledInfo}
-                         price = {this.state.totalPrice}
+                         price = {this.props.price}
                          hasOrder = {this.state.hasOrder}
                          ordered = {this.purchasedHandler} 
              />
@@ -147,7 +143,7 @@ class BurgerBuilder extends Component {
          orderSummery =  <OrderSummery ingredients = {this.props.ings}
         cancelled = {this.purchaseCancelHandler}
         purchased = {this.purchaseContinueHandler}
-        price = {this.state.totalPrice}
+        price = {this.props.price}
         />
     }
     if (this.state.orderConfirmed ){
