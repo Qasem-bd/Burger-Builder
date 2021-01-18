@@ -16,8 +16,6 @@ import * as actionTypes from '../store/actions'
 class BurgerBuilder extends Component {
 
     state = {
-        
-           totalPrice: 4,
            purchased : false,
            orderConfirmed: false,
            error :false
@@ -65,20 +63,9 @@ class BurgerBuilder extends Component {
      }    
 
      purchaseContinueHandler = () => {
-         const queryIng = []
-         for (let i in this.state.ingredients) {
+       
 
-             queryIng.push(encodeURIComponent(i) + '=' + encodeURIComponent( this.state.ingredients[i])) 
-         }
-         let passedTotalPrice = encodeURIComponent('totalPrice') + '='  + encodeURIComponent(this.state.totalPrice)
-         queryIng.push(passedTotalPrice)
-         const queryString = queryIng.join('&') 
-
-        this.props.history.push({
-            pathname : '/checkout',
-            search : '?' + queryString
-            
-        });
+        this.props.history.push('/checkout');
 
       }
     render() {
