@@ -18,7 +18,6 @@ class BurgerBuilder extends Component {
     state = {
         
            totalPrice: 4,
-           hasOrder: false,
            purchased : false,
            orderConfirmed: false,
            error :false
@@ -29,9 +28,10 @@ class BurgerBuilder extends Component {
         // }).catch(error => this.setState({error:true}))
     }
 
-    updateHasOrderStatus = (actualIngtrdients) => {
-        let ingredients = { ...actualIngtrdients}
+    updateHasOrderStatus = () => {
+        let ingredients = this.props.ings
         let sum = 0;
+
         // Maximillain method
         // let ingredientsArr = Object.keys(ingredients);
         //   sum =  ingredientsArr.map((ingred) => {
@@ -43,44 +43,12 @@ class BurgerBuilder extends Component {
         for( let ingred in ingredients) {
             sum = sum + ingredients[ingred];
         }
-            this.setState({
-                hasOrder : sum > 0
-            })
-        
+            
+            
+        return sum > 0
     }
 
-    addIngredientHandler = (ingredientType) => {
-        // const oldCount = this.state.ingredients[ingredientType];
-        // const newCount = oldCount + 1;
-        // let actualIngtrdients = {...this.state.ingredients};
-        // actualIngtrdients[ingredientType]=newCount;
-        // const oldPrice = this.state.totalPrice;
-        //  const newPrice = oldPrice + INGREDIENTS_PRICES[ingredientType];
-        
-        // this.setState({
-        //     ingredients: actualIngtrdients,
-        //     totalPrice: newPrice
-        // })
-        // this.updateHasOrderStatus(actualIngtrdients);
-    }
-
-    removeIngredientHandler = (ingredientType) =>{
-        // const oldCount = this.state.ingredients[ingredientType];
-        // if (oldCount <= 0)
-        //   return
-        // const newCount = oldCount - 1;
-        // let actualIngtrdients = {...this.state.ingredients};
-        // actualIngtrdients[ingredientType]=newCount;
-        // const oldPrice = this.state.totalPrice;
-        //  const newPrice = oldPrice - INGREDIENTS_PRICES[ingredientType];
-        // this.setState({
-        //     ingredients: actualIngtrdients,
-        //     totalPrice: newPrice
-        // })
-
-        // this.updateHasOrderStatus(actualIngtrdients);
-
-     }  
+     
 
      purchasedHandler = () =>{
          this.setState({
@@ -136,7 +104,7 @@ class BurgerBuilder extends Component {
                          removeIngredient= {this.props.onIngredientRemoved}
                          disabledInfo = {disabledInfo}
                          price = {this.props.price}
-                         hasOrder = {this.state.hasOrder}
+                         hasOrder = {this.updateHasOrderStatus()}
                          ordered = {this.purchasedHandler} 
              />
         </Aux>  
