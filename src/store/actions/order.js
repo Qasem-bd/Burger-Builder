@@ -15,9 +15,16 @@ export const purchaseBurgerFail = (error) => {
         error : error
     }
 }
-
+// This is action to display Loading while Purchasing
+export const purchaseBurgerStart = () => {
+    return {
+        type : actionTypes.PURCHASE_BURGER_START
+    }
+}
 export const tryPurchaseBurger = (orderData) => {
     return dispatch => {
+        dispatch (purchaseBurgerStart());
+        
         axios.post('/orders.json',orderData).
         then (response => { 
                 // logging the Response
