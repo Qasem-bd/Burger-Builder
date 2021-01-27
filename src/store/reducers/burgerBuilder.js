@@ -36,7 +36,14 @@ const reducer = (state = initialState, action) => {
         case actionTypes.INIT_INGREDIENTS :
             return {
                 ...state,
-                ingredients :action.ingredients
+                ingredients :action.ingredients,
+                error : false
+            }
+        
+        case actionTypes.FETCH_INGREDIENTS_FAILD :
+            return {
+                ...state,
+                error : true
             }
     
             
