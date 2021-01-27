@@ -16,13 +16,13 @@ export const purchaseBurgerFail = (error) => {
     }
 }
 
-export const tryPurchaseBurger = (toPurchaseOrder) => {
+export const tryPurchaseBurger = (orderData) => {
     return dispatch => {
-        axios.post('/orders.json',toPurchaseOrder).
+        axios.post('/orders.json',orderData).
         then (response => { 
                 // logging the Response
                 console.log(response.data);
-                dispatch(purchaseBurgerSuccess(response.data,toPurchaseOrder))
+                dispatch(purchaseBurgerSuccess(response.data,orderData))
         })
         .catch(error => { 
                 console.log(error)

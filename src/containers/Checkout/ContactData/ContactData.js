@@ -6,6 +6,8 @@ import Spinner from '../../../components/UI/Spiner/Spinner'
 import {withRouter} from 'react-router-dom'
 import Input from '../../../components/UI/Input/Input'
 import {connect} from 'react-redux'
+import withErrorHandler from '../../../hoc/withErrorHandler'
+import * as actions from '../../../store/actions/index'
 
 class ContactData extends Component {
     state = {
@@ -107,22 +109,13 @@ class ContactData extends Component {
             formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value
         }
          
-        const toSendOrder = {
+        const toPurchaseOrder = {
             ingredients : this.props.ings,
             price : this.props.price,
             orderData: formData
         }
-        axios.post('/orders.json',toSendOrder).
-            then (response => { 
-                    // logging the Response
-                    console.log(response);
-                    this.setState({loading : false})
-                    this.props.history.push('/')
-            })
-            .catch(error => { 
-                    this.setState({loading : false})
-                    console.log(error)
-            })
+        this.props.onOrderBurger(toPurchaseOrder);
+
     }
     
     checkValidity = (value,rules) => {
@@ -213,5 +206,10 @@ const mapStateToProps = state => {
         price : state.totalPrice
     }
 }
+const mapDispatchtoProps = dispatch => {
+    return {
+        onOrderBurger : (orderData) => dispatch(actions.tryPurchaseBurger(orderData))
+    }
+}
 
-export default connect(mapStateToProps) (withRouter (ContactData)) ;
+export default connect(mapStateToProps,mapDispatchtoProps) (withErrorHandler (ContactData ,axios)) ;
