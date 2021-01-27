@@ -21,9 +21,7 @@ class BurgerBuilder extends Component {
            error :false
     }
     componentDidMount () {
-        // axios.get('/ingredients.json').then(res => {
-        //     this.setState({ingredients: res.data})
-        // }).catch(error => this.setState({error:true}))
+     this.props.onInitIngredients();
     }
 
     updateHasOrderStatus = () => {
@@ -132,7 +130,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdded : (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
-        onIngredientRemoved : (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName))
+        onIngredientRemoved : (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
+        onInitIngredients : () => dispatch(burgerBuilderActions.initIngredients())
         
      }
 }
