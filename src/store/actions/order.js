@@ -45,6 +45,11 @@ export const checkoutStart = () => {
         type : actionTypes.CHECKOUT_START
     }
 }
+export const checkoutCancel = () => {
+    return {
+        type : actionTypes.CHECKOUT_CANCEL
+    }
+}
 
 // End Actions for The BurgerPurchasing
 

@@ -39,6 +39,11 @@ const reducer = (state = initialState,action) => {
                 ...state,
                 checkoutStart: true
             }
+        case actionTypes.CHECKOUT_CANCEL :
+            return {
+                ...state,
+                checkoutStart: false
+            }
 
         // End Actions for Purchasing The Burger
 

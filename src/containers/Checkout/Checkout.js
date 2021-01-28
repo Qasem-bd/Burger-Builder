@@ -4,12 +4,14 @@ import {Route,Redirect} from 'react-router-dom';
 import CheckoutSummery from '../../components/Order/CkeckoutSummery/CheckoutSummery';
 import ContactData from '../../containers/Checkout/ContactData/ContactData';
 import {connect} from 'react-redux';
+import * as actions from "../../store/actions/index";
 
 class Checkout extends Component {
 
 
     checkoutCancelHandler = () => {
-       this.props.history.goBack();
+        this.props.onCheckoutCancel();
+        this.props.history.goBack();
        
     }
     checkoutContinueHandler = () => {
@@ -43,5 +45,10 @@ const mapStateToProps = state => {
         checkoutStart : state.order.checkoutStart
     }
 }
+const mapDispatchToProps = dispatch => {
+    return {
+        onCheckoutCancel : () => dispatch(actions.checkoutCancel())
+    }
+}
 
-export default connect(mapStateToProps)(Checkout) ;
+export default connect(mapStateToProps,mapDispatchToProps)(Checkout) ;
