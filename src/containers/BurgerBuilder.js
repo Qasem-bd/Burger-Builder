@@ -9,7 +9,7 @@ import axios from '../axios-orders'
 import Spinner from '../components/UI/Spiner/Spinner'
 import withErrorHandler from '../hoc/withErrorHandler';
 import {connect} from 'react-redux'
-import * as burgerBuilderActions from '../store/actions/index'
+import * as actions from '../store/actions/index'
 
 
 
@@ -38,13 +38,11 @@ class BurgerBuilder extends Component {
         for( let ingred in ingredients) {
             sum = sum + ingredients[ingred];
         }
-            
-            
+                
         return sum > 0
     }
 
      
-
      purchasedHandler = () =>{
          this.setState({
           purchased : true   
@@ -60,64 +58,59 @@ class BurgerBuilder extends Component {
      }    
 
      purchaseContinueHandler = () => {
-       
-
+        this.props.onCheckoutStart();
         this.props.history.push('/checkout');
 
       }
+
     render() {
-    const disabledInfo = {...this.props.ings}
+        const disabledInfo = {...this.props.ings}
 
-    for (let key in disabledInfo) {
-        disabledInfo[key]= disabledInfo[key] <= 0;
-    }
-
-       
-
-      
-    let loadedBurger = (this.props.error)? <p>Some Thing is Error</p> :<Spinner/> 
-    let  orderSummery = null;
-    if (this.props.ings) {
-         loadedBurger =  
-        <Aux>
-             <Burger 
-             ingriedents = {this.props.ings}
-             />
-             <BuildControls ingredients = {this.props.ings}
-                         addIngredient = {this.props.onIngredientAdded}
-                         removeIngredient= {this.props.onIngredientRemoved}
-                         disabledInfo = {disabledInfo}
-                         price = {this.props.price}
-                         hasOrder = {this.updateHasOrderStatus()}
-                         ordered = {this.purchasedHandler} 
-             />
-        </Aux>  
-         orderSummery =  <OrderSummery ingredients = {this.props.ings}
-        cancelled = {this.purchaseCancelHandler}
-        purchased = {this.purchaseContinueHandler}
-        price = {this.props.price}
-        />
-    }
-    if (this.state.orderConfirmed ){
-        orderSummery= <Spinner/>
-    }
-     
-
-
-        return (
-            <Aux>
-                <div>Burger Graphic </div>
-                <Modal show = {this.state.purchased }
-                    showCancel = {this.purchaseCancelHandler}>
-                        
-                        {orderSummery}
-                </Modal>
+        for (let key in disabledInfo) {
+            disabledInfo[key]= disabledInfo[key] <= 0;
+        }
         
-                {loadedBurger}
-            </Aux>
-            
+        let loadedBurger = (this.props.error)? <p>Some Thing is Error</p> :<Spinner/> 
+        let  orderSummery = null;
+        if (this.props.ings) {
+            loadedBurger =  
+            <Aux>
+                <Burger 
+                ingriedents = {this.props.ings}
+                />
+                <BuildControls ingredients = {this.props.ings}
+                            addIngredient = {this.props.onIngredientAdded}
+                            removeIngredient= {this.props.onIngredientRemoved}
+                            disabledInfo = {disabledInfo}
+                            price = {this.props.price}
+                            hasOrder = {this.updateHasOrderStatus()}
+                            ordered = {this.purchasedHandler} 
+                />
+            </Aux>  
+            orderSummery =  <OrderSummery ingredients = {this.props.ings}
+            cancelled = {this.purchaseCancelHandler}
+            purchased = {this.purchaseContinueHandler}
+            price = {this.props.price}
+            />
+        }
+        if (this.state.orderConfirmed ){
+            orderSummery= <Spinner/>
+        }
+        
+        return (
+        <Aux>
+            <div>Burger Graphic </div>
+            <Modal show = {this.state.purchased }
+                showCancel = {this.purchaseCancelHandler}>
+                    
+                    {orderSummery}
+            </Modal>
+            {loadedBurger}
+        </Aux>
         );
-    }
+
+     }
+
 }
 
 const mapStateToProps = state => {
@@ -129,9 +122,10 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded : (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
-        onIngredientRemoved : (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
-        onInitIngredients : () => dispatch(burgerBuilderActions.initIngredients())
+        onIngredientAdded : (ingName) => dispatch(actions.addIngredient(ingName)),
+        onIngredientRemoved : (ingName) => dispatch(actions.removeIngredient(ingName)),
+        onInitIngredients : () => dispatch(actions.initIngredients()),
+        onCheckoutStart : () => dispatch(actions.checkoutStart())
         
      }
 }

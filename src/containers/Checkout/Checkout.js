@@ -10,6 +10,7 @@ class Checkout extends Component {
 
     checkoutCancelHandler = () => {
        this.props.history.goBack();
+       
     }
     checkoutContinueHandler = () => {
         
@@ -20,8 +21,10 @@ class Checkout extends Component {
    render () {
        let summery = <Redirect to = "/"/>
        if (this.props.ings) {
+           let checkoutRedirect = (!this.props.checkoutStart) ? <Redirect to = "/"/> : null
            summery =          
              <div>
+                 {checkoutRedirect}
                 <CheckoutSummery 
                         ingriedents = {this.props.ings}
                         checkoutCancelled= {this.checkoutCancelHandler}
@@ -36,7 +39,8 @@ class Checkout extends Component {
 
 const mapStateToProps = state => {
     return {
-        ings : state.burgerBuilder.ingredients
+        ings : state.burgerBuilder.ingredients,
+        checkoutStart : state.order.checkoutStart
     }
 }
 

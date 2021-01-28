@@ -37,3 +37,9 @@ export const tryPurchaseBurger = (orderData) => {
         })
     }
 }
+
+export const checkoutStart = () => {
+    return {
+        type : actionTypes.CHECKOUT_START
+    }
+}

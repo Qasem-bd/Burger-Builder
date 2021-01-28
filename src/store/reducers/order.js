@@ -1,11 +1,18 @@
 import * as actionTypes from '../actions/actionTypes'
 const initialState = {
     orders : [],
-    loading:false
+    loading:false,
+    checkoutStart: false
 }
 
 const reducer = (state = initialState,action) => {
     switch (action.type) {
+        case actionTypes.CHECKOUT_START :
+            return {
+                ...state,
+                checkoutStart: true
+            }
+
         case actionTypes.PURCHASE_BURGER_START :
             return {
                 ...state,
@@ -20,6 +27,7 @@ const reducer = (state = initialState,action) => {
             return {
                 ...state,
                 loading : false,
+                checkoutStart: false,
                 orders :state.orders.concat(newOrder)
             }
         case actionTypes.FETCH_INGREDIENTS_FAILD :

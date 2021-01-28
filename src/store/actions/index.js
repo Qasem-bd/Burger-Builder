@@ -5,5 +5,6 @@ export {
 } from './burgerBuilder';
 
 export {
-    tryPurchaseBurger
+    tryPurchaseBurger,
+    checkoutStart
 } from './order'
