@@ -6,5 +6,6 @@ export {
 
 export {
     tryPurchaseBurger,
-    checkoutStart
+    checkoutStart,
+    tryFetchOrders
 } from './order'
