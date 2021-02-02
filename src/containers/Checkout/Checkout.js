@@ -9,6 +9,10 @@ import * as actions from "../../store/actions/index";
 class Checkout extends Component {
 
 
+    componentWillUnmount() {
+        this.props.onCheckoutCancel();
+    }
+
     checkoutCancelHandler = () => {
         this.props.onCheckoutCancel();
         this.props.history.goBack();
