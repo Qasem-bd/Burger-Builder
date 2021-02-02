@@ -10,3 +10,6 @@ export {
     checkoutCancel,
     tryFetchOrders
 } from './order'
+export {
+    tryAuth
+} from './auth'

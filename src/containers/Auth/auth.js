@@ -2,6 +2,8 @@ import classes from './auth.module.css'
 import React, {Component} from 'react'
 import Input from '../../components/UI/Input/Input'
 import Button from '../../components/UI/Button/Button'
+import * as actions from '../../store/actions/index'
+import { connect, Connect } from 'react-redux';
 
 
 class Auth extends Component {
@@ -64,6 +66,7 @@ class Auth extends Component {
              
             return isValid;
     }
+
     // Function to handle the inputValue of The FormInputElement and store the result in the State
     inputChangeHandler = (event,controlName ) => {
         let updatetControlform = {
@@ -84,7 +87,11 @@ class Auth extends Component {
          this.setState({controls : updatetControlform})
 
     }
-
+    // Apply on Submitting The Form
+    onSubmitHandler = (event) => {
+        event.preventDefault()
+        this.props.onAuth()
+    }
     render () {
 
         let formElementsArray = []
@@ -96,7 +103,7 @@ class Auth extends Component {
         }
         // Create The Form InputElements
         let form = (
-            <form onSubmit = {this.orderHandler}>
+            <form >
                 {
                    formElementsArray.map(formElement => {
                          return  <Input key = {formElement.id}
@@ -114,7 +121,7 @@ class Auth extends Component {
 
         return (
             <div className = {classes.Auth}>
-                <form>
+                <form onSubmit = { this.onSubmitHandler}>
                     {form}
                     <Button btnType = 'Success' >SUBMIT</Button>
                 </form>
@@ -123,5 +130,10 @@ class Auth extends Component {
 
     }
 }
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth : (email,password) => dispatch(actions.tryAuth(email,password))
+    }
+}
 
-export default Auth;
+export default connect(null,mapDispatchToProps) (Auth);
