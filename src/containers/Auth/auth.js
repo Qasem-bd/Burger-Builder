@@ -37,7 +37,8 @@ class Auth extends Component {
                 valid : false,
                 touched : false
             }
-        }
+        },
+        isSignUp: null
     }
     // Check if The form values match to The Rules on Form
     checkValidity = (value,rules) => {
@@ -56,7 +57,7 @@ class Auth extends Component {
             isValid = (value.trim().length >= rules.minLength) && isValid
         }
         if(rules.isEmail) {
-            const patter = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            const patter = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             isValid = patter.test(value) && isValid;
         }
         if(rules.isNumeric) {
@@ -76,7 +77,7 @@ class Auth extends Component {
             ...updatetControlform[controlName]
         }
         updatedformElement.value = event.target.value;
-        console.log(updatedformElement.value)
+        
         updatedformElement.valid = this.checkValidity( updatedformElement.value,updatedformElement.validation);
 
          // true wehn we write something     
@@ -90,8 +91,16 @@ class Auth extends Component {
     // Apply on Submitting The Form
     onSubmitHandler = (event) => {
         event.preventDefault()
-        this.props.onAuth()
+        this.props.onAuth(this.state.controls.email.value,this.state.controls.password.value,this.state.isSignUp)
+        console.log(this.state.isSignUp)
     }
+    confirmSignup = () => {
+        this.setState({isSignUp : true})
+    }
+    confirmSignin = () => {
+        this.setState({isSignUp : false})
+    }
+
     render () {
 
         let formElementsArray = []
@@ -123,7 +132,10 @@ class Auth extends Component {
             <div className = {classes.Auth}>
                 <form onSubmit = { this.onSubmitHandler}>
                     {form}
-                    <Button btnType = 'Success' >SUBMIT</Button>
+                    <Button btnType = 'Success'
+                            clicked = {this.confirmSignin} >Sign-in</Button>
+                    <Button btnType = 'Success'
+                             clicked = {this.confirmSignup} >Sign-up</Button>
                 </form>
             </div>
         );
@@ -132,7 +144,7 @@ class Auth extends Component {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth : (email,password) => dispatch(actions.tryAuth(email,password))
+        onAuth : (email,password,isSignup) => dispatch(actions.tryAuth(email,password,isSignup))
     }
 }
 

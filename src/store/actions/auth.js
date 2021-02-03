@@ -1,5 +1,6 @@
 import { ReactReduxContext } from 'react-redux'
 import * as actionTypes from './actionTypes'
+import axios from 'axios'
 
 export const authStart = () => {
     return {
@@ -21,8 +22,33 @@ export const authFail = (error) => {
     }
 }
 
-export const tryAuth = (email,password) => {
+export const tryAuth = (email,password,isSignup) => {
     return dispatch => {
+        // Starte Authentication
         dispatch(authStart());
+        // console.log(email,'---',password,'----',isSignup)
+        let url = null;
+        let authData= {
+            email: email,
+            password : password,
+            returnSecureToken: true
+        }
+        if (isSignup) {
+             url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAHWNHINQqusYWEWmSJJlCWFQHE8N-hacQ'
+        }
+        else {
+             url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAHWNHINQqusYWEWmSJJlCWFQHE8N-hacQ'
+        }
+        console.log(authData)
+        console.log(url)
+        axios.post(url,authData)
+        .then(res => {
+            console.log(res);
+            dispatch(authSuccess(res.data))
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch(authFail(err));
+        })
     }
 }
