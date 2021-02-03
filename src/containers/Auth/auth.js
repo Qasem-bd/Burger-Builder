@@ -4,6 +4,7 @@ import Input from '../../components/UI/Input/Input'
 import Button from '../../components/UI/Button/Button'
 import * as actions from '../../store/actions/index'
 import { connect, Connect } from 'react-redux';
+import Spinner from '../../components/UI/Spiner/Spinner'
 
 
 class Auth extends Component {
@@ -131,12 +132,22 @@ class Auth extends Component {
                 }
             </form>
         );
+        // Displaying The Spinner While Loading
+        if (this.props.loading) {
+            form = <Spinner/>
+        }
+        // Displaying ErrorMessage when a Error hapens
+        let errorMessage = null;
+        if (this.props.error) {
+            errorMessage = <p className = {classes.ErrorMessage} >{this.props.error.message}</p>
+        }
 
         return (
             <div className = {classes.Auth}>
+                {errorMessage}
                 <form onSubmit = { this.onSubmitHandler}>
                     {form}
-                    <Button btnType = 'Success'>{this.state.isSignUp ? 'SIGN-UP' : 'SIGN-IN' }</Button>
+                    <Button btnType = 'Success'>{this.state.isSignUp ? 'Sign-up' : 'Sign-in' }</Button>
                 </form>
                 <Button btnType = 'Danger'
                              clicked = {this.switchAuthMethodHandler} >SWITCH TO {this.state.isSignUp ? 'SIGN-IN' : 'SIGN-UP' }</Button>
@@ -145,10 +156,18 @@ class Auth extends Component {
 
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        loading : state.auth.loading,
+        error : state.auth.error
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         onAuth : (email,password,isSignup) => dispatch(actions.tryAuth(email,password,isSignup))
     }
 }
 
-export default connect(null,mapDispatchToProps) (Auth);
+export default connect(mapStateToProps,mapDispatchToProps) (Auth);
