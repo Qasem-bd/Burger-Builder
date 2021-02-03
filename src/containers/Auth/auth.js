@@ -100,7 +100,11 @@ class Auth extends Component {
     confirmSignin = () => {
         this.setState({isSignUp : false})
     }
-
+    switchAuthMethodHandler = () => {
+        this.setState(prevState => {
+            return {isSignUp: !prevState.isSignUp}
+        })
+    }
     render () {
 
         let formElementsArray = []
@@ -132,11 +136,10 @@ class Auth extends Component {
             <div className = {classes.Auth}>
                 <form onSubmit = { this.onSubmitHandler}>
                     {form}
-                    <Button btnType = 'Success'
-                            clicked = {this.confirmSignin} >Sign-in</Button>
-                    <Button btnType = 'Success'
-                             clicked = {this.confirmSignup} >Sign-up</Button>
+                    <Button btnType = 'Success'>{this.state.isSignUp ? 'SIGN-UP' : 'SIGN-IN' }</Button>
                 </form>
+                <Button btnType = 'Danger'
+                             clicked = {this.switchAuthMethodHandler} >SWITCH TO {this.state.isSignUp ? 'SIGN-IN' : 'SIGN-UP' }</Button>
             </div>
         );
 
