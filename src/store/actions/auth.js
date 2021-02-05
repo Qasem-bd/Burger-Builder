@@ -63,7 +63,7 @@ export const tryAuth = (email,password,isSignup) => {
             dispatch(authSuccess(res.data.idToken,res.data.localId))
         })
         .catch(err => {
-            console.log(err);
+            console.log(err.response);
             dispatch(authFail(err.response.data.error));
         })
     }

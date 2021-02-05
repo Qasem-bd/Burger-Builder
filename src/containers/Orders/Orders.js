@@ -10,7 +10,7 @@ class Orders extends Component {
    
     componentDidMount () {
         console.log(this.props);
-       this.props.onFetchOrders()
+       this.props.onFetchOrders(this.props.token)
     }
 
     render () {
@@ -22,6 +22,9 @@ class Orders extends Component {
                                         ingredients = {order.ingredients}
                                         price = {order.price} />);
                             })
+        }
+        if(this.props.error) {
+            toShowOrders = <p>Some Thing is Error</p>
         }
 
         return (
@@ -35,12 +38,14 @@ class Orders extends Component {
 const mapStateToProps = state => {
     return {
         orders : state.order.orders,
-        loading : state.order.loading
+        loading : state.order.loading,
+        error : state.order.error,
+        token : state.auth.idToken
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchOrders : () => dispatch(actions.tryFetchOrders())
+        onFetchOrders : (token) => dispatch(actions.tryFetchOrders(token))
     }
 }
 
