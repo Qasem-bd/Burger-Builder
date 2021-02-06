@@ -94,7 +94,6 @@ class Auth extends Component {
     onSubmitHandler = (event) => {
         event.preventDefault()
         this.props.onAuth(this.state.controls.email.value,this.state.controls.password.value,this.state.isSignUp)
-        console.log(this.state.isSignUp)
     }
     confirmSignup = () => {
         this.setState({isSignUp : true})
@@ -107,6 +106,12 @@ class Auth extends Component {
             return {isSignUp: !prevState.isSignUp}
         })
     }
+
+    // Start Ckeckout after Successfully login
+    goToCheckout () {
+
+    }
+
     render () {
 
         let formElementsArray = []
@@ -142,11 +147,18 @@ class Auth extends Component {
         if (this.props.error) {
             errorMessage = <p className = {classes.ErrorMessage} >{this.props.error.message}</p>
         }
-        // Redirecting  after successfully Logging-in
+        // Redirecting  after successfully Logging-in [BurgerBuilder -> Authentication -> Checkout || Authentication -> BurgerBuilder]
         let authRedirect = null
         if (this.props.isAuthenticated) {
-            authRedirect = <Redirect to = "/" />
+            if(this.props.price > 4) {
+                this.props.onBeginCheckout();
+                authRedirect = <Redirect to = "/checkout" />
+            }
+            else {
+                authRedirect = <Redirect to = "/" />
+            }
         }
+
         return (
          
             <div className = {classes.Auth}>
@@ -168,13 +180,15 @@ const mapStateToProps = state => {
     return {
         loading : state.auth.loading,
         error : state.auth.error,
-        isAuthenticated : state.auth.idToken !== null
+        isAuthenticated : state.auth.idToken !== null,
+        price : state.burgerBuilder.totalPrice
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth : (email,password,isSignup) => dispatch(actions.tryAuth(email,password,isSignup))
+        onAuth : (email,password,isSignup) => dispatch(actions.tryAuth(email,password,isSignup)),
+        onBeginCheckout: () => dispatch (actions.checkoutStart())
     }
 }
 
