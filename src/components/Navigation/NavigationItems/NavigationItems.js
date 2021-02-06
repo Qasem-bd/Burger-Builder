@@ -7,8 +7,8 @@ const NavigationItems = (props) => (
             {/* we have used "genau to mention to that, the Route "/" will be active just by Route and not by subRoute */}
         <NavigationItem Link ='/' genau >Burger Builder</NavigationItem> 
         {
-            props.isAuth ?  <NavigationItem Link = '/auth'>Authenticate</NavigationItem> 
-                         :  <NavigationItem Link = '/logout'>Logout</NavigationItem> 
+            props.isAuth ?  <NavigationItem Link = '/logout'> Logout</NavigationItem> 
+                         :  <NavigationItem Link = '/auth'>Authenticate</NavigationItem> 
         }
        
         {

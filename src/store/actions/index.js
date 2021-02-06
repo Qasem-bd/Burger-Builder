@@ -11,5 +11,6 @@ export {
     tryFetchOrders
 } from './order'
 export {
-    tryAuth
+    tryAuth,
+    logout
 } from './auth'
