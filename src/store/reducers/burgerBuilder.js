@@ -33,6 +33,12 @@ const removeIngredient = (state,action) => {
     }  
 }
 const initIngredients = (state,action) => {
+    if (!action.ingredients) {
+        return {
+            ...state,
+            ingredients: null
+        }
+    }
     return {
         ...state,
         ingredients : {

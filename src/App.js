@@ -3,11 +3,11 @@ import './App.css';
 import Layout from './components/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder';
 import Logout from './containers/Auth/Logout/Logout'
+import About from './containers/About/About'
 import {Route,Router,Switch,Redirect} from 'react-router-dom';
 import * as actions from './store/actions/index'
 import {connect} from 'react-redux'
 import { Component,lazy,Suspense } from 'react';
-import Spinner from './components/UI/Spiner/Spinner'
 
 const asyncCheckout = lazy(() => import('./containers/Checkout/Checkout'))
 const asyncOrders = lazy(() => import('././containers/Orders/Orders'))
@@ -24,7 +24,7 @@ class App extends Component {
         <Suspense fallback={<div>Loading...</div>}>
             <Switch>
                 <Route path = '/auth' component = {asyncAuth}/>
-                <Route path = '/about' component = {BurgerBuilder}/>
+                <Route path = '/about' component = {About}/>
                 <Route path = '/' component = {BurgerBuilder}/>
                 <Redirect to = "/" />
             </Switch>
@@ -38,6 +38,7 @@ class App extends Component {
                 <Route path = '/checkout' component = {asyncCheckout}/>
                 <Route path = '/auth' component = {asyncAuth}/>
                 <Route path = '/logout' component = {Logout}/>
+                <Route path = '/about' component = {About}/>
                 <Route path = '/' component = {BurgerBuilder}/>
                 <Redirect to = "/" />
             </Switch>
