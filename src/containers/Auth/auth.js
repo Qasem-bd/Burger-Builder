@@ -42,6 +42,13 @@ class Auth extends Component {
         },
         isSignUp: null
     }
+    componentWillUnmount() {
+        // fix Warning: Can't perform a React state update on an unmounted component
+        this.setState = (state,callback)=>{
+            return;
+        };
+    }
+
     // Check if The form values match to The Rules on Form
     checkValidity = (value,rules) => {
         let isValid = false
@@ -96,10 +103,10 @@ class Auth extends Component {
         this.props.onAuth(this.state.controls.email.value,this.state.controls.password.value,this.state.isSignUp)
     }
     confirmSignup = () => {
-        this.setState({isSignUp : true})
+        this.setState(prevState =>  { return {isSignUp : true}})
     }
     confirmSignin = () => {
-        this.setState({isSignUp : false})
+        this.setState(prevState =>  { return {isSignUp : false}})
     }
     switchAuthMethodHandler = () => {
         this.setState(prevState => {
@@ -123,7 +130,7 @@ class Auth extends Component {
         }
         // Create The Form InputElements
         let form = (
-            <form >
+            <div>
                 {
                    formElementsArray.map(formElement => {
                          return  <Input key = {formElement.id}
@@ -136,7 +143,7 @@ class Auth extends Component {
                                         touched = {formElement.config.touched}/>
                         }) 
                 }
-            </form>
+            </div>
         );
         // Displaying The Spinner While Loading
         if (this.props.loading) {
