@@ -7,7 +7,7 @@ import Checkout from './containers/Checkout/Checkout';
 import Orders from './containers/Orders/Orders';
 import Auth from './containers/Auth/auth'
 import Logout from './containers/Auth/Logout/Logout'
-import {Route,Switch,withRouter} from 'react-router-dom';
+import {Route,Switch,Redirect} from 'react-router-dom';
 import * as actions from './store/actions/index'
 import {connect} from 'react-redux'
 import { Component } from 'react';
@@ -20,24 +20,41 @@ class App extends Component {
     this.props.onAuthCheck();
   }
     render () {
-      return (
-        <div>
-          {/* <Training/> */}
-           <Layout>
-           {/* <BurgerBuilder/>   
-           <Checkout/> */}
-           <Switch>
+      let gaurdRoute = (
+            <Switch>
+                <Route path = '/auth' component = {Auth}/>
+                <Route path = '/about' component = {BurgerBuilder}/>
+                <Route path = '/' component = {BurgerBuilder}/>
+                <Redirect to = "/" />
+            </Switch>
+      )
+      if (this.props.isAuth) {
+        gaurdRoute = (
+          <Switch>
               <Route path = '/orders' component = {Orders}/>
               <Route path = '/checkout' component = {Checkout}/>
               <Route path = '/auth' component = {Auth}/>
               <Route path = '/logout' component = {Logout}/>
               <Route path = '/' component = {BurgerBuilder}/>
-           </Switch>
+              <Redirect to = "/" />
+          </Switch>
+        )
+      }
+      return (
+        <div>
+           <Layout>
+             {gaurdRoute}
           </Layout> 
         </div>
       ); 
   }
     
+}
+
+const mapStateToProps = state => {
+  return {
+    isAuth: state.auth.idToken !== null
+  }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -46,4 +63,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null,mapDispatchToProps) (App);
+export default connect(mapStateToProps,mapDispatchToProps) (App);
