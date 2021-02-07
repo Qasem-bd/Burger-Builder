@@ -3,19 +3,27 @@
   margin: 2% auto;
   text-align: center;
 }
+
 .Burger {
-  width: 60%;
-  margin: 10% auto;
+  width: 100%;
+  margin: 20px auto 0px auto;
+  height: 275px;
+  overflow: auto;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
-@media screen and (min-width: 500px) {
+@media (min-width: 500px) and (min-height: 400px) {
   .Burger {
-    width: 50%;
+    width: 350px;
+    height: 275px;
   }
 }
 
-@media screen and (min-width: 800px) {
+@media (min-width: 500px) and (min-height: 401px) {
   .Burger {
-    width: 45%;
+    width: 450px;
+    height: 275px;
   }
 }

@@ -19,13 +19,13 @@
 
 .Seeds1 {
   width: 10px;
-  height: 15%;
+  height: 50%;
   position: absolute;
   background-color: white;
   left: 30%;
-  top: 50%;
+  top: 28%;
   border-radius: 40%;
-  transform: rotate(-20deg);
+  transform: rotate(-58deg);
   box-shadow: inset -2px -3px #c9c9c9;
 }
 
@@ -35,10 +35,10 @@
   height: 100%;
   position: absolute;
   background-color: white;
-  left: -170%;
-  top: -260%;
+  left: -343%;
+  top: -159%;
   border-radius: 40%;
-  transform: rotate(60deg);
+  transform: rotate(80deg);
   box-shadow: inset -1px 2px #c9c9c9;
 }
 
@@ -48,10 +48,10 @@
   height: 100%;
   position: absolute;
   background-color: white;
-  left: 180%;
-  top: -50%;
-  border-radius: 40%;
-  transform: rotate(60deg);
+  left: 477%;
+  top: 165%;
+  border-radius: 36%;
+  transform: rotate(80deg);
   box-shadow: inset -1px -3px #c9c9c9;
 }
 
@@ -76,7 +76,7 @@
   left: 150%;
   top: -130%;
   border-radius: 40%;
-  transform: rotate(90deg);
+  transform: rotate(120deg);
   box-shadow: inset 1px 3px #c9c9c9;
 }
 
