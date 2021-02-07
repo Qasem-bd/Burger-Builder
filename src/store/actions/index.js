@@ -12,5 +12,6 @@ export {
 } from './order'
 export {
     tryAuth,
-    logout
+    logout,
+    checkAuthLStorage
 } from './auth'

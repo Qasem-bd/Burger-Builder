@@ -7,27 +7,43 @@ import Checkout from './containers/Checkout/Checkout';
 import Orders from './containers/Orders/Orders';
 import Auth from './containers/Auth/auth'
 import Logout from './containers/Auth/Logout/Logout'
-import {Route,Switch} from 'react-router-dom';
+import {Route,Switch,withRouter} from 'react-router-dom';
+import * as actions from './store/actions/index'
+import {connect} from 'react-redux'
+import { Component } from 'react';
 
 
 
-function App() {
-  return (
-    <div>
-      {/* <Training/> */}
-       <Layout>
-       {/* <BurgerBuilder/>   
-       <Checkout/> */}
-       <Switch>
-          <Route path = '/orders' component = {Orders}/>
-          <Route path = '/checkout' component = {Checkout}/>
-          <Route path = '/auth' component = {Auth}/>
-          <Route path = '/logout' component = {Logout}/>
-          <Route path = '/' component = {BurgerBuilder}/>
-       </Switch>
-      </Layout> 
-    </div>
-  );   
+class App extends Component {
+ 
+  componentDidMount () {
+    this.props.onAuthCheck();
+  }
+    render () {
+      return (
+        <div>
+          {/* <Training/> */}
+           <Layout>
+           {/* <BurgerBuilder/>   
+           <Checkout/> */}
+           <Switch>
+              <Route path = '/orders' component = {Orders}/>
+              <Route path = '/checkout' component = {Checkout}/>
+              <Route path = '/auth' component = {Auth}/>
+              <Route path = '/logout' component = {Logout}/>
+              <Route path = '/' component = {BurgerBuilder}/>
+           </Switch>
+          </Layout> 
+        </div>
+      ); 
+  }
+    
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuthCheck : () => dispatch(actions.checkAuthLStorage())
+  }
+}
+
+export default connect(null,mapDispatchToProps) (App);

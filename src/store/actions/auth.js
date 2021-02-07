@@ -1,6 +1,7 @@
 import { ReactReduxContext } from 'react-redux'
 import * as actionTypes from './actionTypes'
 import axios from 'axios'
+import Logout from '../../containers/Auth/Logout/Logout'
 
 export const authStart = () => {
     return {
@@ -24,6 +25,9 @@ export const authFail = (error) => {
 }
 // To logout
 export const logout = () => {
+    localStorage.removeItem('idToken')
+    localStorage.removeItem('userId')
+    localStorage.removeItem('expiresIn')
     return {
         type : actionTypes.LOGOUT
     }
@@ -58,7 +62,13 @@ export const tryAuth = (email,password,isSignup) => {
         // console.log(url)
         axios.post(url,authData)
         .then(res => {
+
             console.log (typeof(+res.data.expiresIn), res.data.expiresIn);
+            const startPointDate = (new Date()).getTime() + (res.data.expiresIn * 1000)
+            localStorage.setItem('idToken',res.data.idToken );
+            localStorage.setItem('userId',res.data.localId );
+            localStorage.setItem('expiresIn',startPointDate )
+
             dispatch(checkAuthTimeout(+res.data.expiresIn))
             dispatch(authSuccess(res.data.idToken,res.data.localId))
         })
@@ -67,4 +77,24 @@ export const tryAuth = (email,password,isSignup) => {
             dispatch(authFail(err.response.data.error));
         })
     }
+}
+
+export const checkAuthLStorage = () => {
+    return dispatch => {
+            const startPointDate = localStorage.getItem('expiresIn');
+            console.log('startPointDate :', startPointDate)
+
+            const actualDate = (new Date()).getTime();
+            console.log ('actualDate :', actualDate)
+            
+            if (actualDate < startPointDate) {
+                console.log ('You have time : ', (startPointDate- actualDate)/1000,'Second')
+                dispatch (authSuccess(localStorage.getItem('idToken'),localStorage.getItem('userId')))
+            }
+            else {
+                dispatch(logout())
+            }
+   
+    }
+
 }
