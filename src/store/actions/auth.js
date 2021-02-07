@@ -63,7 +63,6 @@ export const tryAuth = (email,password,isSignup) => {
         axios.post(url,authData)
         .then(res => {
 
-            console.log (typeof(+res.data.expiresIn), res.data.expiresIn);
             const startPointDate = (new Date()).getTime() + (res.data.expiresIn * 1000)
             localStorage.setItem('idToken',res.data.idToken );
             localStorage.setItem('userId',res.data.localId );
@@ -73,7 +72,6 @@ export const tryAuth = (email,password,isSignup) => {
             dispatch(authSuccess(res.data.idToken,res.data.localId))
         })
         .catch(err => {
-            console.log(err.response);
             dispatch(authFail(err.response.data.error));
         })
     }
@@ -82,13 +80,11 @@ export const tryAuth = (email,password,isSignup) => {
 export const checkAuthLStorage = () => {
     return dispatch => {
             const startPointDate = localStorage.getItem('expiresIn');
-            console.log('startPointDate :', startPointDate)
 
             const actualDate = (new Date()).getTime();
-            console.log ('actualDate :', actualDate)
-            
+
             if (actualDate < startPointDate) {
-                console.log ('You have time : ', (startPointDate- actualDate)/1000,'Second')
+            
                 dispatch (authSuccess(localStorage.getItem('idToken'),localStorage.getItem('userId')))
             }
             else {

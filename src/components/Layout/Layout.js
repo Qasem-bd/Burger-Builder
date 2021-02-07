@@ -11,7 +11,7 @@ class Layout extends Component {
     }
 
     componentDidUpdate () {
-        console.log('isAuth : ', this.props.isAuth)
+        
     }
 
     toggleSidedrawerHandler = () => {

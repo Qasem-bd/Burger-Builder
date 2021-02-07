@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 class Orders extends Component {
    
     componentDidMount () {
-        console.log(this.props);
        this.props.onFetchOrders(this.props.token, this.props.userId)
     }
 

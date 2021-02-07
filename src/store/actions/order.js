@@ -12,15 +12,13 @@ export const purchaseBurgerStart = () => {
 export const tryPurchaseBurger = ( orderData, token) => {
     return dispatch => {
         dispatch (purchaseBurgerStart());
-        console.log(token)
         axios.post('/orders.json?auth=' + token, orderData).
         then (response => { 
                 // logging the Response
-                console.log(response.data);
+                // console.log(response.data);
                 dispatch(purchaseBurgerSuccess(response.data.name,orderData))
         })
         .catch(error => { 
-                console.log(error)
                 dispatch(purchaseBurgerFail(error))
         })
     }

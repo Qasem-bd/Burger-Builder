@@ -100,9 +100,6 @@ class ContactData extends Component {
 
     orderHandler = (event) => {
         event.preventDefault();
-        // console.log(this.props)
-        // console.log(this.props.ingredients)
-        // console.log(this.props.totalPrice)
                
         const formData = {}
         for (let formElementIdentifier in this.state.orderForm) {
@@ -115,7 +112,6 @@ class ContactData extends Component {
             orderData: formData,
             userId :this.props.userId
         }
-        console.log('hallo ich bin token',this.props.token)
         this.props.onOrderBurger( toPurchaseOrder, this.props.token);
 
     }
