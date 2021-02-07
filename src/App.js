@@ -1,17 +1,17 @@
 import logo from './logo.svg';
-import Training from './Training/Training'
 import './App.css';
 import Layout from './components/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder';
-import Checkout from './containers/Checkout/Checkout';
-import Orders from './containers/Orders/Orders';
-import Auth from './containers/Auth/auth'
 import Logout from './containers/Auth/Logout/Logout'
-import {Route,Switch,Redirect} from 'react-router-dom';
+import {Route,Router,Switch,Redirect} from 'react-router-dom';
 import * as actions from './store/actions/index'
 import {connect} from 'react-redux'
-import { Component } from 'react';
+import { Component,lazy,Suspense } from 'react';
+import Spinner from './components/UI/Spiner/Spinner'
 
+const asyncCheckout = lazy(() => import('./containers/Checkout/Checkout'))
+const asyncOrders = lazy(() => import('././containers/Orders/Orders'))
+const asyncAuth = lazy(() => import('./containers/Auth/auth'))
 
 
 class App extends Component {
@@ -21,23 +21,27 @@ class App extends Component {
   }
     render () {
       let gaurdRoute = (
+        <Suspense fallback={<div>Loading...</div>}>
             <Switch>
-                <Route path = '/auth' component = {Auth}/>
+                <Route path = '/auth' component = {asyncAuth}/>
                 <Route path = '/about' component = {BurgerBuilder}/>
                 <Route path = '/' component = {BurgerBuilder}/>
                 <Redirect to = "/" />
             </Switch>
+        </Suspense>
       )
       if (this.props.isAuth) {
         gaurdRoute = (
-          <Switch>
-              <Route path = '/orders' component = {Orders}/>
-              <Route path = '/checkout' component = {Checkout}/>
-              <Route path = '/auth' component = {Auth}/>
-              <Route path = '/logout' component = {Logout}/>
-              <Route path = '/' component = {BurgerBuilder}/>
-              <Redirect to = "/" />
-          </Switch>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Switch>
+                <Route path = '/orders' component = {asyncOrders}/>
+                <Route path = '/checkout' component = {asyncCheckout}/>
+                <Route path = '/auth' component = {asyncAuth}/>
+                <Route path = '/logout' component = {Logout}/>
+                <Route path = '/' component = {BurgerBuilder}/>
+                <Redirect to = "/" />
+            </Switch>
+          </Suspense>
         )
       }
       return (
