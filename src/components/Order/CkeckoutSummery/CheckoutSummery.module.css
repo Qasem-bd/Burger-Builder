@@ -5,6 +5,9 @@
   flex-direction: column;
   align-items: center;
 }
+.CheckoutSummery h1 {
+  color: #40a4c8;
+}
 
 .Burger {
   width: 100%;
