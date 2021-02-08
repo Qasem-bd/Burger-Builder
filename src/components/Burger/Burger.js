@@ -15,7 +15,7 @@ const burger = (props) => {
 
     });
     if (IngredientsBuffer.length ===0 ) {
-        IngredientsBuffer.push(<p key = {1} className = {classes.Empty}>Pleas start adding elements</p>);
+        IngredientsBuffer.push(<p key = {1} className = {classes.Empty}>Please start adding elements</p>);
     }
     
     

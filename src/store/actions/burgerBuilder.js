@@ -27,6 +27,7 @@ export const fetchIngredientsFaild = () => {
 }
 export const initIngredients = () => {
    return dispatch => {
+        dispatch(setIngredients());
           axios.get('/ingredients.json').then(res => {
             dispatch(setIngredients(res.data));
         }).catch(error => {

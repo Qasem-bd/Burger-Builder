@@ -2,7 +2,6 @@ import React from 'react'
 import classes from './Spinner.module.css'
 
 const spinner = () => {
-    console.log('her ist spinner')
     return (
         <div className = {classes.Loader}>Loading...</div>
     )

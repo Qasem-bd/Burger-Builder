@@ -8,7 +8,8 @@ const initialState = {
 const INGREDIENTS_PRICES = {
     salad:0.7,
     cheese:0.8,
-    meat:1.3
+    meat:1.3,
+    bacon : 0.9
 }
 const addIngredient = (state,action) => {
     return {
@@ -32,10 +33,17 @@ const removeIngredient = (state,action) => {
     }  
 }
 const initIngredients = (state,action) => {
+    if (!action.ingredients) {
+        return {
+            ...state,
+            ingredients: null
+        }
+    }
     return {
         ...state,
         ingredients : {
             salad : action.ingredients.salad,
+            bacon : action.ingredients.bacon,
             cheese : action.ingredients.cheese,
             meat : action.ingredients.meat
         },

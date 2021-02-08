@@ -18,7 +18,8 @@ const sidedrawer = (props) => {
            </div>
         
          <nav>
-             <NavigationItems/>
+             <NavigationItems isAuth = {props.isAuthenticate}
+                              checkoutBegin = {props.checkoutStart}/>
          </nav>
        </div>
         </Aux>
