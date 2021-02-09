@@ -9,20 +9,26 @@ configure({ adapter: new Adapter() });
 
 describe('<NavigationItems/>',() => {
     let wrapper;
-    // it will be excuted befor every Testing
+    // it will be excuted befor every excuting the "it" method
     beforeEach(() => {
         wrapper = shallow(<NavigationItems/>);
     })
 
-    it('should render three(3) <NavigationItems/> elements if not authenticated ', () => {
+    it('should render three(3) <NavigationItems/> elements if user is not authenticated ', () => {
         // const wrapper = shallow(<NavigationItems/>);
 
         expect(wrapper.find(NavigationItem)).toHaveLength(3);
     });
 
-     it('should render four(4) <NavigationItems/> elements if is authenticated ', () => {
+     it('should render four(4) <NavigationItems/> elements if user is authenticated ', () => {
         // const wrapper = shallow(<NavigationItems isAuth/>);
         wrapper.setProps({isAuth : true})
         expect(wrapper.find(NavigationItem)).toHaveLength(4);
+    })
+
+    it('should check if NvigationItems contain Logout element, if user is authenticated ', () => {
+        // const wrapper = shallow(<NavigationItems isAuth/>);
+        wrapper.setProps({isAuth : true})
+        expect(wrapper.contains( <NavigationItem Link = '/logout'> Logout</NavigationItem>) ).toEqual(true);
     })
 });

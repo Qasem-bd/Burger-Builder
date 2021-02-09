@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Layout from './components/Layout/Layout';
-import BurgerBuilder from './containers/BurgerBuilder';
+import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Logout from './containers/Auth/Logout/Logout'
 import About from './containers/About/About'
 import {Route,Router,Switch,Redirect} from 'react-router-dom';
