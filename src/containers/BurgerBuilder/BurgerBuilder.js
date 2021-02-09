@@ -1,19 +1,19 @@
 
 import React,{Component} from 'react'
-import Aux from '../hoc/Auxillary'
-import Burger from '../components/Burger/Burger'
-import BuildControls from '../components/Burger/BuildControls/BuildControls'
-import Modal from '../components/UI/Modal/Modal'
-import OrderSummery from '../components/Burger/OrderSummery/OrderSummery'
-import axios from '../axios-orders'
-import Spinner from '../components/UI/Spiner/Spinner'
-import withErrorHandler from '../hoc/withErrorHandler';
+import Aux from '../../hoc/Auxillary'
+import Burger from '../../components/Burger/Burger'
+import BuildControls from '../../components/Burger/BuildControls/BuildControls'
+import Modal from '../../components/UI/Modal/Modal'
+import OrderSummery from '../../components/Burger/OrderSummery/OrderSummery'
+import axios from '../../axios-orders'
+import Spinner from '../../components/UI/Spiner/Spinner'
+import withErrorHandler from '../../hoc/withErrorHandler';
 import {connect} from 'react-redux'
-import * as actions from '../store/actions/index'
+import * as actions from '../../store/actions/index'
 
 
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
 
     state = {
            purchased : false,
